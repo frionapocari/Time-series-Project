@@ -1,0 +1,50 @@
+# estimates for frontend and backend development pyet fabion 
+frontend_estimates = {
+    "Integration with Algolia InstantSearch": {"lower": 20, "upper": 40},
+    "Customizing Search UI/UX": {"lower": 15, "upper": 30},
+    "Implementing Dynamic Filtering and Facets": {"lower": 15, "upper": 25},
+    "Personalization and A/B Testing": {"lower": 10, "upper": 20},
+    "Geo-Search Integration": {"lower": 15, "upper": 25}  # (if)
+}
+
+backend_estimates = {
+    "Indexing Data with Algolia": {"lower": 20, "upper": 40},
+    "Custom Ranking and Relevance Configuration": {"lower": 15, "upper": 30},
+    "Backend API Integration": {"lower": 20, "upper": 40},
+    "Analytics and Monitoring Setup": {"lower": 10, "upper": 20},
+    "Optimizing Search Performance": {"lower": 20, "upper": 30}
+}
+# Function to calculate estimated days and weeks
+def calculate_time(estimates, factor):
+    lower_bound_total = sum([estimate["lower"] for estimate in estimates.values()])
+    upper_bound_total = sum([estimate["upper"] for estimate in estimates.values()])
+    
+    # Adjust estimates based on factor
+    adjusted_lower_bound_total = lower_bound_total * factor
+    adjusted_upper_bound_total = upper_bound_total * factor
+    
+    # Assuming 40 hours/week productivity (Oigeni:3-5h/day =>24 h/week) and 8 hours/day work productive 3-5 avg 4
+    lower_bound_weeks = adjusted_lower_bound_total / 24
+    upper_bound_weeks = adjusted_upper_bound_total / 24
+    
+    lower_bound_days = adjusted_lower_bound_total / 4 #idealisht 8 
+    upper_bound_days = adjusted_upper_bound_total / 4
+    
+    return {
+        "lower_bound_days": lower_bound_days,
+        "upper_bound_days": upper_bound_days,
+        "lower_bound_weeks": lower_bound_weeks,
+        "upper_bound_weeks": upper_bound_weeks
+    }
+#  factor 1.2 for LC and Ch
+frontend_time = calculate_time(frontend_estimates, 1.2)
+backend_time = calculate_time(backend_estimates, 1.2)
+
+#  results
+print("Frontend Development:")
+print(f"Lower Bound: {frontend_time['lower_bound_days']} days ({frontend_time['lower_bound_weeks']} weeks)")
+print(f"Upper Bound: {frontend_time['upper_bound_days']} days ({frontend_time['upper_bound_weeks']} weeks)\n")
+
+print("Backend Development:")
+print(f"Lower Bound: {backend_time['lower_bound_days']} days ({backend_time['lower_bound_weeks']} weeks)")
+print(f"Upper Bound: {backend_time['upper_bound_days']} days ({backend_time['upper_bound_weeks']} weeks)")
